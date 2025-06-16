@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .error{
+        background-color: red;
+    }
+    .card{
+        background-color: yellowgreen;
+        border-radius: 10px;
+        width: 400px;
+        height: 250px;
+        margin-left: 20px;
+    }
+    .chip{
+        background-color: rgb(231, 231, 14);
+        width: 60px;
+        height: 50px;
+        border-radius: 10px;
+        margin-left: 30px;
+        margin-top: 50px;
+    }
+    .GL-conteiner{
+        display: flex;
+        width: 150mm;
+        height: 150mm;
+        flex-direction: column;
+        flex-wrap:wrap;
+    }
+    .nameBank{
+        text-align: right;
+        padding-top: 10px;
+        padding-right: 10px;
+    }
+    .NomerCard{
+        margin: 0px;
+        margin-top: 10px;
+        margin-left: 17%;
+        font-size: 30px;
+    }
+    .data{
+        margin-left: 50%;
+    }
+    .im{
+        padding-top: 30px;
+        margin-left: 6px;
+        padding-right: 60%;
+        width: 50px;
+        height: 50px;
+    }
+    .logo{
+        width: 80px;
+        height: 50px;
+    }
+    .niz{
+        display: flex;
+        flex-direction: row;
+        margin: 0px;
+    }
+
+
+</style>
+<body>
+    <div class="GL-conteiner">
+        <form name="my">
+            <p>Название банка</p>
+            <p id="bank">_____________</p>
+            <select id="Spisok" onchange="viberiBank()">
+                <option value="Публичное акционерное общество «Сбербанк России»">Сбербанк</option>
+                <option value="Публичное акционерное общество «Банк ВТБ»">ВТБ</option>
+                <option value="Акционерное общество «Райффайзенбанк»">Райффайзенбaнк</option>
+                <option value="Акционерное общество коммерческий банк «Ситибанк»">Ситибанк</option>
+                <option value="Акционерное общество «ЮниКредит Банк»">Юникредит Банк</option>
+                <option value="Общество с ограниченной ответственностью «КЭБ ЭйчЭнБи Банк»">КЭБ ЭйчЭнБи Банк</option>
+                <option value="Акционерное общество «БНП ПАРИБА Банк»">БНП Париба Банк</option>
+                <option value="Акционерное общество «Тойота Банк»">Тойота Банк</option>
+                <option value="Общество с ограниченной ответственностью «Дойче Банк»">Дойче Банк</option>
+                <option value="Общество с ограниченной ответственностью «Чайна сельскохозяйственный банк»">Чайнасельхозбанк</option>
+                <option value="Публичное акционерное общество «Банк ПСБ»">Промсвязьбанк</option>
+                <option value="Акционерное общество «АйСиБиСи Банк»">АйСиБиСи Банк</option>
+            </select>
+            <p>Тип платежной системы</p>
+            <p id="TypePS">_____________</p>
+            <select id="TypePaidSystem" onchange="viberiTypePaidSystem()">
+                <option>МИР</option>
+                <option>VISA</option>
+                <option>MasterCard</option>
+            </select>
+            <p>Номер карты (16 цифр)</p>
+            <input id="16" maxlength="16" oninput="forNumber()">
+
+            <p>Имя держателя карты</p>
+            <input id="NaMe" type="text" pattern="[A-Z]" oninput="forText()">
+            <p>Месяц и год окончания карты</p>
+            <input id="dateCard" type="date">
+            <input type="submit" onclick="LoviDate()">
+        </form>
+
+        <div class="card">
+            <div id="nameBank" class="nameBank"> _______</div>
+            <div class="chip"></div>
+            <div id="NomerCard" class="NomerCard">0000000000000000</div>
+            <div id="data" class="data">_______</div>
+            <div class="niz">
+                <div id="im" class="im">_______</div><img id="logo" src="" alt="" class="logo" src="">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        function viberiBank(){
+            let b = Array.from(Spisok.options).filter(option => option.selected).map(option =>option.value)
+            if(Array.from(Spisok.options).filter(option => option.selected).map(option =>option.value) !=b ){
+                b = Array.from(Spisok.options).filter(option => option.selected).map(option =>option.value)
+                document.getElementById("bank").innerHTML = b
+                document.getElementById("nameBank").innerHTML = b
+
+            }
+        }
+
+        function viberiTypePaidSystem(){
+            let b = Array.from(TypePaidSystem.options).filter(option => option.selected).map(option =>option.value)
+            if(Array.from(TypePaidSystem.options).filter(option => option.selected).map(option =>option.value) !=b ){
+                b = Array.from(TypePaidSystem.options).filter(option => option.selected).map(option =>option.value)
+                document.getElementById("TypePS").innerHTML = b
+            }
+            switch(b[0]){
+                case "VISA":
+                    document.getElementById("logo").src = "visa_payment_method_card_icon_142746.webp"
+                break;
+
+                case "МИР":
+                    document.getElementById("logo").src = "Mir-logo.SVG.svg.png"
+                break;
+
+                case "MasterCard":
+                    document.getElementById("logo").src = "mastercard_old_payment_method_icon_142751.webp"
+                break;
+
+                default:
+                    document.getElementById("logo").src = ""
+                }
+
+        }
+
+        function forNumber(){
+            document.getElementById("16").addEventListener('input', function(){
+                if(isNaN(document.getElementById("16").value) != false){
+                    document.getElementById("16").style.backgroundColor = "red"
+                }else{
+                    document.getElementById("16").style.backgroundColor = "white"
+                    document.getElementById("NomerCard").innerHTML = document.getElementById("16").value
+                }
+            })
+        }
+        function forText(){
+            document.getElementById("NaMe").addEventListener('input', function(){
+                if(document.getElementById("NaMe").pattern ==true){
+                    document.getElementById("NaMe").style.backgroundColor = "red"
+                    document.getElementById("im").innerHTML = document.getElementById("NaMe").value
+                }else{
+                    document.getElementById("NaMe").style.backgroundColor = "white"
+                    document.getElementById("im").innerHTML = document.getElementById("NaMe").value
+                }
+            })
+        }
+        function LoviDate(){
+            document.getElementById("data").innerHTML = document.getElementById("dateCard").value
+        }
+        
+        document.getElementById('TypePS').addEventListener('change', function() {  
+            const im = document.getElementById("TypePS")
+            console.log(im)
+            console.log(im.value)
+            switch(im.value){
+                case "VISA":
+                    document.getElementById("logo").src = "visa_payment_method_card_icon_142746.webp"
+                break;
+                case "МИР":
+                    document.getElementById("logo").src = "Mir-logo.SVG.svg.png"
+                break;
+                case "MasterCard":
+                    document.getElementById("logo").src = "mastercard_old_payment_method_icon_142751.webp"
+                break;
+                default:
+                    document.getElementById("logo").src = ""
+
+            }
+        });  
+
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        // function viberi(punktik){
+        //     document.getElementById(punktik).addEventListener("click", function() {
+        //         punktik.selected = true
+        //         let b = Array.from(Spisok.options).filter(option => option.selected).map(option =>option.value)
+        //         if(Array.from(Spisok.options).filter(option => option.selected).map(option =>option.value) !=b ){
+        //             b = Array.from(Spisok.options).filter(option => option.selected).map(option =>option.value)
+        //             document.getElementById("bank").innerHTML = b
+        //         }
+        //     })
+        // }
+        
+        
+        // let b = Array.from(Spisok.options).filter(option => option.selected).map(option =>option.value)
+        // if(Array.from(Spisok.options).filter(option => option.selected).map(option =>option.value) !=b ){
+        //     b = Array.from(Spisok.options).filter(option => option.selected).map(option =>option.value)
+        //     document.getElementById("bank").innerHTML = b
+        // }
+        //напиши фунцию которая при действии selected в меню будет срабатывать и изменять значение 
+    </script>
+</body>
+</html>
